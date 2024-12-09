@@ -37,7 +37,7 @@ typedef struct controller
 	int				color_style;
 	int				random_color;
 	int				random_color2;
-	int				map_largenest;
+	int				map_scale;
 	int				has_colors;
 	double			z_scale;
 	int				shift_x;

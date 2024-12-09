@@ -1,6 +1,6 @@
-FRAEMWORKS=  -Lminilibx-linux -lmlx -lX11 -lXext -lm
+FRAEMWORKS=  minilibx/mlx.h -Lminilibx-linux -lmlx -lX11 -lXext -lm
 
-#minilibx-linux/libmlx.a
+#
 
 FLAGS=cc -Werror -Wextra -Wall 
 
@@ -11,24 +11,24 @@ OBJ_P = obj/
 
 SRC_PATH = srcs/
 
-BONUS_SRC = events_bonus.c
-MAND_SRC = events.c
+BONUS_SRC = keys_bonus.c
+MAND_SRC = keys.c
 
-SRC = colors.c coordinates.c draw.c errors.c fdf.c \
-ft_split.c functions.c functionalities.c modes.c parse_map.c \
-parsing_functions.c get_next_line.c get_next_line_utils.c ft_printf.c\
+SRC = colors.c coordinates.c draw.c errors_utils.c main.c \
+ft_split.c utils.c map_scale.c colorpick.c parse_map.c \
+parse_utils.c get_next_line.c get_next_line_utils.c ft_printf.c\
 ft_printhex.c ft_printint.c ft_printptr.c ft_printunsigned.c \
 
 INCS	= -I ./includes/
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 SOBJ	= $(addprefix $(OBJ_P), $(SRC:.c=.o))
-MAND_OBJ = $(OBJ_P)events.o
-BONUS_OBJ = $(OBJ_P)events_bonus.o
+MAND_OBJ = $(OBJ_P)keys.o
+BONUS_OBJ = $(OBJ_P)keys_bonus.o
 
 all: $(OBJ_P) $(NAME)
 
 $(NAME): $(SOBJ) $(MAND_OBJ)
-	rm -f obj/events_bonus.o
+	rm -f obj/keys_bonus.o
 	rm -f fdf_bonus
 	$(FLAGS) $(SOBJ) $(MAND_OBJ) -o $(NAME) $(FRAEMWORKS) -g
 	@printf $(MAKE_LOGO)
@@ -36,7 +36,7 @@ $(NAME): $(SOBJ) $(MAND_OBJ)
 bonus : $(OBJ_P) $(BONUS_NAME)
 
 $(BONUS_NAME): $(SOBJ) $(BONUS_OBJ)
-	rm -f obj/events.o
+	rm -f obj/keys.o
 	rm -f fdf
 	$(FLAGS) $(SOBJ) $(BONUS_OBJ) -o $(BONUS_NAME) $(FRAEMWORKS) -g
 	@printf $(MAKE_LOGO)

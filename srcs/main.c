@@ -32,7 +32,7 @@ int	is_map_has_colors(t_dot **matrix)
 	return (0);
 }
 
-int	get_map_largenest(t_dot **matrix)
+int	get_map_scale(t_dot **matrix)
 {
 	int	y;
 	int	x;
@@ -49,7 +49,7 @@ int	get_map_largenest(t_dot **matrix)
 void	init_controller(t_controller *data, t_dot **matrix)
 {
 	data->matrix = matrix;
-	data->map_largenest = get_map_largenest(matrix);
+	data->map_scale = get_map_scale(matrix);
 	data->scale = get_scale(data) * 25;
 	data->z_scale = get_z_scale(data);
 	data->is_isometric = 1;

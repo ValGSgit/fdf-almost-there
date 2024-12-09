@@ -14,34 +14,34 @@
 
 double	get_scale(t_controller *data)
 {
-	if (data->map_largenest < 100)
+	if (data->map_scale < 100)
 		return (3);
-	if (data->map_largenest < 200)
+	if (data->map_scale < 200)
 		return (1.5);
-	if (data->map_largenest < 400)
+	if (data->map_scale < 400)
 		return (1);
-	if (data->map_largenest < 500)
+	if (data->map_scale < 500)
 		return (0.5);
-	if (data->map_largenest < 700)
+	if (data->map_scale < 700)
 		return (0.4);
-	if (data->map_largenest < 900)
+	if (data->map_scale < 900)
 		return (0.3);
 	return (0.2);
 }
 
 double	get_z_scale(t_controller *data)
 {
-	if (data->map_largenest < 50)
+	if (data->map_scale < 50)
 		return (1.3);
-	if (data->map_largenest < 100)
+	if (data->map_scale < 100)
 		return (1);
-	if (data->map_largenest < 300)
+	if (data->map_scale < 300)
 		return (0.5);
-	if (data->map_largenest < 500)
+	if (data->map_scale < 500)
 		return (0.4);
-	if (data->map_largenest < 700)
+	if (data->map_scale < 700)
 		return (0.3);
-	if (data->map_largenest < 900)
+	if (data->map_scale < 900)
 		return (0.2);
 	return (0.1);
 }

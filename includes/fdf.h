@@ -16,7 +16,7 @@
 # include "fdf_macros.h"
 # include "fdf_structures.h"
 # include <math.h>
-# include <mlx.h>
+# include "../minilibx/mlx.h"
 # include <fcntl.h>
 # include "get_next_line.h"
 # include <X11/keysym.h>
@@ -53,11 +53,11 @@ int				coor_y(float y, t_controller *data);
 int				ft_exit(t_controller *data);
 double			get_z_scale(t_controller *data);
 double			get_scale(t_controller *data);
-int				colors_mode1(t_dot a, t_dot b);
-int				colors_mode2(t_dot a, t_dot b);
-int				colors_mode3(t_controller *params, t_dot a, t_dot b);
-int				colors_mode4(t_controller *params, t_dot a, t_dot b);
-int				colors_mode5(t_dot a, t_dot b);
+int				color_mode1(t_dot a, t_dot b);
+int				color_mode2(t_dot a, t_dot b);
+int				color_mode3(t_controller *params, t_dot a, t_dot b);
+int				color_mode4(t_controller *params, t_dot a, t_dot b);
+int				color_mode5(t_dot a, t_dot b);
 char			to_lower(char c);
 int				index_of(char *s, char c);
 int				hex_to_int(char *s);

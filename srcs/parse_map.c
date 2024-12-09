@@ -58,7 +58,7 @@ int	get_points_from_line(char *line, t_dot **matrix_of_points, int y)
 	x = 0;
 	while (points[x])
 	{
-		is_number_valid(points[x]);
+		is_valid(points[x]);
 		matrix_of_points[y][x].z = ft_atoi(points[x]);
 		matrix_of_points[y][x].x = x;
 		matrix_of_points[y][x].y = y;
@@ -71,18 +71,17 @@ int	get_points_from_line(char *line, t_dot **matrix_of_points, int y)
 	return (x);
 }
 
-t_dot **alloc_new(t_dot **new, int y, int x)
+void alloc_new(t_dot **new, int y, int x)
 {
 	new = (t_dot **)malloc(sizeof(t_dot *) * (++y + 1));
 	if (!new)
-		return (NULL);
+		return ;
 	while (y > 0)
 	{
 		new[--y] = (t_dot *)malloc(sizeof(t_dot) * (x + 1));
 		if (!new[y])
 			free_matrix(new);
 	}
-	return (new);
 }
 
 t_dot	**alloc_all_points(char *file_name)
@@ -95,56 +94,60 @@ t_dot	**alloc_all_points(char *file_name)
 
 	fd = open_file(file_name, O_RDONLY);
 	line = get_next_line(fd);
+	new = NULL;
 	if (!line)
-	{
-		close(fd);
-		get_err(INVALID_MAP_ERR);
-	}
+		return (close(fd), get_err(INVALID_MAP_ERR), exit(1), NULL);
 	x = ft_wdcounter(line, ' ');
 	y = 0;
-	while (line)
+	while (line && y++)
 	{
-		y++;
 		free(line);
 		line = get_next_line(fd);
 	}
 	if (line)
 		free(line);
 	close(fd);
-	new = alloc_new(new, y, x);
+	alloc_new(new, y, x);
 	if (!new)
 		return (free_matrix(new), get_err(MALLOC_ERR), NULL);
 	return (new);
 }
 
-t_dot	**parse_map(char *file_name)
+void	read_points(char *file_name, t_dot **matrix, int y)
 {
-	t_dot	**matrix_of_points;
-	int		y;
-	int		fd;
 	char	*line;
+	int		fd;
 
-	matrix_of_points = alloc_all_points(file_name);
-	if (!matrix_of_points)
-		return (free_matrix(matrix_of_points), NULL);
 	fd = open_file(file_name, O_RDONLY);
-	y = 0;
 	line = get_next_line(fd);
-	if (!line)
+	if (!line || fd < 0)
 	{
 		close(fd);
 		get_err(INVALID_MAP_ERR);
 	}
 	while (line)
 	{
-		get_points_from_line(line, matrix_of_points, y++);
+		get_points_from_line(line, matrix, y++);
 		free(line);
 		line = get_next_line(fd);
 	}
 	if (line)
 		free(line);
-	if (matrix_of_points[y])
-		free(matrix_of_points[y]);
+	if (matrix[y])
+		free(matrix[y]);
+	close(fd);
+}
+
+t_dot	**parse_map(char *file_name)
+{
+	t_dot	**matrix_of_points;
+	int		y;
+
+	matrix_of_points = alloc_all_points(file_name);
+	if (!matrix_of_points)
+		return (free_matrix(matrix_of_points), NULL);
+	y = 0;
+	read_points(file_name, matrix_of_points, y);
 	matrix_of_points[y] = NULL;
-	return (close(fd),matrix_of_points);
+	return (matrix_of_points);
 }
